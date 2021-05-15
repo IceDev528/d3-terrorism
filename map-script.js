@@ -4,7 +4,6 @@ var countryData = new Array();
 var migrationData = new Array();
 var populationData = new Array();
 var arrowData = new Array();
-var thickValue = 3000;
 var currentYear = document.getElementById('year-select').value;
 var terrorType = document.getElementById('terror-select').value;
 
@@ -120,14 +119,14 @@ function getThickness(num) {
     var strokeWidth = 1;
     var posVal = Math.abs(num);
     
-    if(posVal > 0 && posVal < 100) strokeWidth = 0.3;
-    else if(posVal >= 100 && posVal < 300) strokeWidth = 0.5;
-    else if(posVal >= 300 && posVal < 500) strokeWidth = 1;
-    else if(posVal >= 500 && posVal < 1000) strokeWidth = 1.5;
-    else if(posVal >= 1000 && posVal < 3000) strokeWidth = 2;
-    else if(posVal >= 3000 && posVal < 5000) strokeWidth = 2.5;
-    else if(posVal >= 5000 && posVal < 10000) strokeWidth = 3;
-    else if(posVal >= 10000) strokeWidth = 5;
+    if(posVal > 0 && posVal < 100) strokeWidth = 1;
+    else if(posVal >= 100 && posVal < 300) strokeWidth = 1.5;
+    else if(posVal >= 300 && posVal < 500) strokeWidth = 2;
+    else if(posVal >= 500 && posVal < 1000) strokeWidth = 2.5;
+    else if(posVal >= 1000 && posVal < 3000) strokeWidth = 3;
+    else if(posVal >= 3000 && posVal < 5000) strokeWidth = 4;
+    else if(posVal >= 5000 && posVal < 10000) strokeWidth = 5;
+    else if(posVal >= 10000) strokeWidth = 6;
 
     return strokeWidth;
 }
@@ -157,6 +156,7 @@ function getArrowGradient(num) {
     }
     return strokeColor;
 }
+
 function setArrow(country) {
     for(var i = 0; i < migrationData.length; i++) {
         if(country == migrationData[i].base_country_name) {
@@ -182,6 +182,33 @@ function setArrow(country) {
     }
 }
 
+function showMap(geography) {
+    var flag = 0;
+    for(var i = 0; i < migrationData.length; i++) {
+        if(geography.properties.name == migrationData[i].base_country_name) {
+            flag = 1;
+            setArrow(migrationData[i].base_country_name);
+            drawArrow(arrowData);
+            break;
+        }
+    }
+    if(flag == 0) alert("Map: No data!!!");
+}
+
+function showRadar(geography) {
+    var flag = 0;
+    for(var i = 0; i < isicArr.length; i++) {
+        if(geography.properties.name == isicArr[i].country_name) {
+            flag = 1;
+            if(baseCountry == null) baseCountry = geography.properties.name;
+            else compareCountry = geography.properties.name;
+            break;
+        }
+    }
+    console.log(baseCountry, compareCountry);
+    if(flag == 0) alert("Radar: No data!!!");
+}
+
 var mapData = {
     element: document.getElementById("worldmap"),
     projection: 'mercator',
@@ -200,17 +227,8 @@ var mapData = {
             d3.select("#tooltip").transition().duration(200).style("opacity", 0);
         })
         .on('click', function(geography) {
-            var flag = 0;
-            for(var i = 0; i < migrationData.length; i++) {
-                if(geography.properties.name == migrationData[i].base_country_name) {
-                    // alert(migrationData[i]["net_per_10K_" + currentYear]);
-                    flag = 1;
-                    setArrow(migrationData[i].base_country_name);
-                    drawArrow(arrowData);
-                    break;
-                }
-            }
-            if(flag == 0) alert("No data!!!");
+            showMap(geography);
+            showRadar(geography);
         });
     },
 };
@@ -220,26 +238,26 @@ var map = new Datamap(mapData);
 color.domain([0,1,2,3,4,5]);
 
 var legend = d3.select("#legend-box").append("svg")
-            .attr("class", "legend")
-            .attr("width", 200)
-            .attr("height", 200)
-            .selectAll("g")
-            .data(color.domain().slice())
-            .enter()
-            .append("g")
-            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+    .attr("class", "legend")
+    .attr("width", 200)
+    .attr("height", 150)
+    .selectAll("g")
+    .data(color.domain().slice())
+    .enter()
+    .append("g")
+    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
 legend.append("rect")
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", color);
 
 legend.append("text")
-        .data(legendText)
-        .attr("x", 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .text(function(d) { return d; });
+    .data(legendText)
+    .attr("x", 24)
+    .attr("y", 9)
+    .attr("dy", ".35em")
+    .text(function(d) { return d; });
 
 map.svg.call(d3.behavior.zoom().on('zoom', function () {
      map.svg.selectAll('g').attr('transform', 'translate(' + d3.event.translate + ')' + ' scale(' + d3.event.scale + ')')
@@ -266,14 +284,12 @@ d3.csv("data/Gapminder_All_Time.csv", function (data) {
             populationData.push(temp);
         }
     }
-    console.log(populationData);
 });
 
 d3.csv("data/public_use-talent-migration.csv", function (data) {
     for (var i = 0; i < data.length; i++) {
         migrationData.push(data[i]);
     }
-    console.log(migrationData);
 });
 
 $(function() {

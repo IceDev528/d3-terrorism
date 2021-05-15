@@ -1,8 +1,16 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica;
+}
+
 .row {
   display: inline-flex;
   align-items: center;
-  width: 90%;
-  margin-left: 5% !important;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 #worldmap {
@@ -32,6 +40,7 @@
   padding: 10px;
   border: 1px solid #222;
 }
+
 
 #tooltip {
   position: absolute;
@@ -71,4 +80,30 @@
 }
 #tooltip tr td:nth-child(2) {
   text-align: center;
+}
+
+.legend-box {
+  height: 120px;
+}
+
+.legend-group > label {
+  display: block;
+}
+
+.legend-btns {
+  display: inline-flex; 
+  align-items: center;
+}
+
+.left-bar {
+  margin-top: 50px;
+  padding-left: 0 !important;
+}
+
+#chart {
+  margin-top: 20px;
+}
+
+.btn {
+  outline: none !important;
 }

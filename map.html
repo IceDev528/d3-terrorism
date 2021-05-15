@@ -7,27 +7,37 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 charts">
-                <div class="form-group">
-                    <label for="sel1" id="year-val">Current Year: 2015</label>
-                    <input type="range" id="year-select" min="2015" max="2019" value="2015" step="1">
+            <div class="col-md-4 left-bar">
+                <div class="charts">
+                    <div class="form-group">
+                        <label id="year-val">Current Year: 2015</label>
+                        <input type="range" id="year-select" min="2015" max="2019" value="2015" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Terrorism Type:</label>
+                        <select class="form-control" id="terror-select">
+                            <option value="attack">Attack</option>
+                            <option value="victim">Victim</option>
+                            <option value="killed">Killed</option>
+                        </select>
+                    </div>
+                    <div class="legend-group" id="legend-group">
+                        <label>Legend Details:</label>
+                        <div class="legend-btns">
+                            <svg class="legend-box" id="legend-box"></svg>
+                            <div class="button-group">
+                                <button class="btn btn-primary">Reset Map</button>
+                                <button class="btn btn-success">Reset Radar Chart</button>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="form-group">
-                    <label for="sel1">Terrorism Type:</label>
-                    <select class="form-control" id="terror-select">
-                        <option value="attack">Attack</option>
-                        <option value="victim">Victim</option>
-                        <option value="killed">Killed</option>
-                    </select>
-                </div>
-                <div class="legend-group" id="legend-group">
-                    <label for="sel1">Legend Details:</label>
-                    <svg class="legend-box" id="legend-box"></svg>
-                </div>
+                <div id="chart"></div>
             </div>
+            
             <div id="tooltip"></div>
-            <div class="col-md-9" id="worldmap">
-                </div>
+            <div class="col-md-8" id="worldmap">
             </div>
         </div>
     </div>
@@ -38,5 +48,7 @@
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-    <script src="map.js"></script>
+    <script src="map-script.js"></script>
+    <script src="radar.js"></script>
+    <script src="radar-script.js"></script>
 </body>
