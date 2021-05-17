@@ -29,7 +29,7 @@ var RadarChart = {
 	var allAxis = (d[0].map(function(i, j){return i.axis}));
 	var total = allAxis.length;
 	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
-	var Format = d3.format('%');
+	var Format = d3.format('');
 	d3.select(id).select("svg").remove();
 	
 	var g = d3.select(id)
@@ -177,7 +177,7 @@ var RadarChart = {
 					tooltip
 						.attr('x', newX)
 						.attr('y', newY)
-						.text(Format(d.value))
+						.text(Format(d.value * defaultValue))
 						.transition(200)
 						.style('opacity', 1);
 						

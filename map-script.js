@@ -6,6 +6,7 @@ var populationData = new Array();
 var arrowData = new Array();
 var currentYear = document.getElementById('year-select').value;
 var terrorType = document.getElementById('terror-select').value;
+var map;
 
 // var colors = d3.scale.category10();
 var colors = d3.scale.linear().domain([1,10])
@@ -196,44 +197,45 @@ function showMap(geography) {
 }
 
 function showRadar(geography) {
-    var flag = 0;
     for(var i = 0; i < isicArr.length; i++) {
         if(geography.properties.name == isicArr[i].country_name) {
-            flag = 1;
             if(baseCountry == null) baseCountry = geography.properties.name;
             else compareCountry = geography.properties.name;
             break;
         }
     }
     console.log(baseCountry, compareCountry);
-    if(flag == 0) alert("Radar: No data!!!");
 }
 
-var mapData = {
-    element: document.getElementById("worldmap"),
-    projection: 'mercator',
-    fills: {
-        defaultFill: "#808080",
-    },
-    height: 900,
-    done: function(datamap) {
-        datamap.svg.selectAll('.datamaps-subunit').on('mouseover', function (geography) {
-            d3.select("#tooltip").transition().duration(200).style("opacity", .9);      
-			d3.select("#tooltip").html(tooltipHtml(geography.properties.name, geography.id))  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY) + "px");
-        })
-        .on('mouseout', function () {
-            d3.select("#tooltip").transition().duration(200).style("opacity", 0);
-        })
-        .on('click', function(geography) {
-            showMap(geography);
-            showRadar(geography);
-        });
-    },
-};
+function setMapData() {
+    var mapData = {
+        element: document.getElementById("worldmap"),
+        projection: 'mercator',
+        fills: {
+            defaultFill: "#808080",
+        },
+        height: 900,
+        done: function(datamap) {
+            datamap.svg.selectAll('.datamaps-subunit').on('mouseover', function (geography) {
+                d3.select("#tooltip").transition().duration(200).style("opacity", .9);      
+                d3.select("#tooltip").html(tooltipHtml(geography.properties.name, geography.id))  
+                    .style("left", (d3.event.pageX) + "px")     
+                    .style("top", (d3.event.pageY) + "px");
+            })
+            .on('mouseout', function () {
+                d3.select("#tooltip").transition().duration(200).style("opacity", 0);
+            })
+            .on('click', function(geography) {
+                showMap(geography);
+                showRadar(geography);
+                setRadarData();
+            });
+        }
+    };
+    return mapData;
+}
 
-var map = new Datamap(mapData);
+map = new Datamap(setMapData());
 
 color.domain([0,1,2,3,4,5]);
 
@@ -302,6 +304,12 @@ $(function() {
     $("#terror-select").change(function (event) {
         terror = event.target.value;
         terrorType = terror;
+        setCountries(allData, currentYear, terrorType);
+    })
+    $(".reset-map").click(function () {
+        document.getElementById("worldmap").innerHTML = "";
+        arrowData = [];
+        map = new Datamap(setMapData());
         setCountries(allData, currentYear, terrorType);
     })
 });
