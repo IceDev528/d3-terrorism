@@ -7,7 +7,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 left-bar">
+            <div class="col-md-2 left-bar">
                 <div class="charts">
                     <div class="form-group">
                         <label id="year-val">Current Year: 2015</label>
@@ -27,18 +27,43 @@
                             <svg class="legend-box" id="legend-box"></svg>
                             <div class="button-group">
                                 <button class="btn btn-primary reset-map">Reset Map</button>
-                                <button class="btn btn-success reset-radar">Reset Radar Chart</button>
+                                <button class="btn btn-success reset-radar">Reset Radar</button>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
+                <div class="legends">
+                    <p> Industries </p>
+                    <label>1. Manufacturing: <strong>C</strong></label>
+                    <label>2. Information and communication: <strong>J</strong></label>
+                    <label>3. Professional scientific and technical activities: <strong>M</strong></label>
+                    <label>4. Human health and social work activities: <strong>Q</strong></label>
+                    <label>5. Wholesale and retail trade; repair of motor vehicles and motorcycles: <strong>G</strong></label>
+                    <label>6. Arts, entertainment and recreation: <strong>R</strong></label>
+                    <label>7. Administrative and support service activities: <strong>N</strong></label>
+                    <label>8. Accommodation and food service <br> activities: <strong>I</strong></label>
+                    <label>9. Financial and insurance activities: <strong>K</strong></label>
+                    <label>10. Real estate activities: <strong>L</strong></label>
+                    <label>11. Construction: <strong>F</strong></label>
+                    <label>12. Mining and quarrying: <strong>B</strong></label>
+                    <label>13. Electricity, gas, steam and air conditioning supply: <strong>D</strong></label>
+                    <label>14. Agriculture, forestry and fishing: <strong>A</strong></label>
+                    <label>15. Education: <strong>P</strong></label>
+                    <label>16. Public administration and defence; compulsory social security: <strong>O</strong></label>
+                    <label>17. Transportation and storage: <strong>H</strong></label>
+                    <label>18. Other service activities: <strong>S</strong></label>
+                    <label>19. Not_mapped: <strong>X</strong></label>
+                </div>
+            </div>
+            
+            <div class="col-md-6" id="worldmap"></div>
+
+            <div class="col-md-4">
                 <div id="chart"></div>
+                <div id="chart1"></div>
             </div>
             
             <div id="tooltip"></div>
-                <div class="col-md-8" id="worldmap">
-            </div>
         </div>
     </div>
 

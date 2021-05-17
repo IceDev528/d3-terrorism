@@ -241,7 +241,7 @@ color.domain([0,1,2,3,4,5]);
 
 var legend = d3.select("#legend-box").append("svg")
     .attr("class", "legend")
-    .attr("width", 200)
+    .attr("width", 150)
     .attr("height", 150)
     .selectAll("g")
     .data(color.domain().slice())

@@ -2,53 +2,98 @@ var isicArr = [];
 var baseCountry = null;
 var compareCountry = null;
 var defaultValue = 2000;
+var unitValue = 10000;
 
-var w = 500,
-	h = 500;
+var w = 400,
+	h = 400;
 
 var colorscale = d3.scale.category10();
 
 var radarData = [
 	[
-	  {axis:"Manufacturing",value:0},
-	  {axis:"Information and communication",value:0},
-	  {axis:"Professional scientific and technical activities",value:0},
-	  {axis:"Human health and social work activities",value:0},
-	  {axis:"Wholesale and retail trade; repair of motor vehicles and motorcycles",value:0},
-	  {axis:"Arts, entertainment and recreation ",value:0},
-	  {axis:"Administrative and support service activities",value:0},
-	  {axis:"Accommodation and food service activities",value:0},
-	  {axis:"Financial and insurance activities",value:0},
-	  {axis:"Real estate activities",value:0},
-	  {axis:"Construction",value:0},
-	  {axis:"Mining and quarrying",value:0},
-	  {axis:"Electricity, gas, steam and air conditioning supply",value:0},
-	  {axis:"Agriculture, forestry and fishing ",value:0},
-	  {axis:"Education",value:0},
-	  {axis:"Public administration and defence; compulsory social security",value:0},
-	  {axis:"Transportation and storage",value:0},
-	  {axis:"Other service activities",value:0},
-	  {axis:"Not_mapped",value:0},
+	  {axis:"C",value:0},
+	  {axis:"J",value:0},
+	  {axis:"M",value:0},
+	  {axis:"Q",value:0},
+	  {axis:"G",value:0},
+	  {axis:"R",value:0},
+	  {axis:"N",value:0},
+	  {axis:"I",value:0},
+	  {axis:"K",value:0},
+	  {axis:"L",value:0},
+	  {axis:"F",value:0},
+	  {axis:"B",value:0},
+	  {axis:"D",value:0},
+	  {axis:"A",value:0},
+	  {axis:"P",value:0},
+	  {axis:"O",value:0},
+	  {axis:"H",value:0},
+	  {axis:"S",value:0},
+	  {axis:"X",value:0},
 	],[
-	  {axis:"Manufacturing",value:0},
-	  {axis:"Information and communication",value:0},
-	  {axis:"Professional scientific and technical activities",value:0},
-	  {axis:"Human health and social work activities",value:0},
-	  {axis:"Wholesale and retail trade; repair of motor vehicles and motorcycles",value:0},
-	  {axis:"Arts, entertainment and recreation ",value:0},
-	  {axis:"Administrative and support service activities",value:0},
-	  {axis:"Accommodation and food service activities",value:0},
-	  {axis:"Financial and insurance activities",value:0},
-	  {axis:"Real estate activities",value:0},
-	  {axis:"Construction",value:0},
-	  {axis:"Mining and quarrying",value:0},
-	  {axis:"Electricity, gas, steam and air conditioning supply",value:0},
-	  {axis:"Agriculture, forestry and fishing ",value:0},
-	  {axis:"Education",value:0},
-	  {axis:"Public administration and defence; compulsory social security",value:0},
-	  {axis:"Transportation and storage",value:0},
-	  {axis:"Other service activities",value:0},
-	  {axis:"Not_mapped",value:0},
+		{axis:"C",value:0},
+		{axis:"J",value:0},
+		{axis:"M",value:0},
+		{axis:"Q",value:0},
+		{axis:"G",value:0},
+		{axis:"R",value:0},
+		{axis:"N",value:0},
+		{axis:"I",value:0},
+		{axis:"K",value:0},
+		{axis:"L",value:0},
+		{axis:"F",value:0},
+		{axis:"B",value:0},
+		{axis:"D",value:0},
+		{axis:"A",value:0},
+		{axis:"P",value:0},
+		{axis:"O",value:0},
+		{axis:"H",value:0},
+		{axis:"S",value:0},
+		{axis:"X",value:0},
+	]
+];
+
+var radarData1 = [
+	[
+		{axis:"C",value:0},
+		{axis:"J",value:0},
+		{axis:"M",value:0},
+		{axis:"Q",value:0},
+		{axis:"G",value:0},
+		{axis:"R",value:0},
+		{axis:"N",value:0},
+		{axis:"I",value:0},
+		{axis:"K",value:0},
+		{axis:"L",value:0},
+		{axis:"F",value:0},
+		{axis:"B",value:0},
+		{axis:"D",value:0},
+		{axis:"A",value:0},
+		{axis:"P",value:0},
+		{axis:"O",value:0},
+		{axis:"H",value:0},
+		{axis:"S",value:0},
+		{axis:"X",value:0},
+	],[
+	  {axis:"C",value:0},
+	  {axis:"J",value:0},
+	  {axis:"M",value:0},
+	  {axis:"Q",value:0},
+	  {axis:"G",value:0},
+	  {axis:"R",value:0},
+	  {axis:"N",value:0},
+	  {axis:"I",value:0},
+	  {axis:"K",value:0},
+	  {axis:"L",value:0},
+	  {axis:"F",value:0},
+	  {axis:"B",value:0},
+	  {axis:"D",value:0},
+	  {axis:"A",value:0},
+	  {axis:"P",value:0},
+	  {axis:"O",value:0},
+	  {axis:"H",value:0},
+	  {axis:"S",value:0},
+	  {axis:"X",value:0},
 	]
 ];
 
@@ -63,12 +108,15 @@ var mycfg = {
 }
 
 RadarChart.draw("#chart", radarData, mycfg);
+RadarChart.draw("#chart1", radarData1, mycfg);
 
 function clearRadarData() {
 	var cnt = radarData[0].length;
 	for (var j = 0; j < cnt; j++) {
 		radarData[0][j].value = 0;
 		radarData[1][j].value = 0;
+		radarData1[0][j].value = 0;
+		radarData1[1][j].value = 0;
 	}
 }
 
@@ -77,19 +125,37 @@ function setRadarData() {
 	var cnt = radarData[0].length;
 	for (var j = 0; j < cnt; j++) {
 		for (var k = 0; k < isicArr.length; k++) {
-			if (radarData[0][j].axis == isicArr[k].isic_section_name && isicArr[k].country_name == baseCountry) {
-				radarData[0][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / defaultValue;
+			if (radarData[0][j].axis == isicArr[k].isic_section_index && isicArr[k].country_name == baseCountry) {
+				radarData[0][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / (defaultValue * unitValue) ;
+				radarData[1][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / (defaultValue * unitValue);
 			}
-			if (radarData[1][j].axis == isicArr[k].isic_section_name && isicArr[k].country_name == compareCountry) {
-				radarData[1][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / defaultValue;
+			else if (radarData[0][j].axis == isicArr[k].isic_section_index && isicArr[k].country_name == compareCountry) {
+				radarData1[0][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / (defaultValue * unitValue) ;
+				radarData1[1][j].value += (isicArr[k]["net_per_10K_" + currentYear] * 1) / (defaultValue * unitValue);
 			}
 		}
-		radarData[0][j].value = radarData[0][j].value.toFixed(2);
-		radarData[1][j].value = radarData[1][j].value.toFixed(2);
+		radarData[0][j].value *= unitValue;
+		radarData[1][j].value *= unitValue;
+		radarData1[0][j].value *= unitValue;
+		radarData1[1][j].value *= unitValue;
 	}
+	for (var j1 = 0; j1 < cnt; j1++) {
+		if(radarData[0][j1].value < 0) radarData[0][j1].value = 0;
+		if(radarData1[0][j1].value < 0) radarData1[0][j1].value = 0;
 
+		if(radarData[1][j1].value < 0) {
+			radarData[1][j1].value *= -1;
+		}
+		else if(radarData[1][j1].value > 0) radarData[1][j1].value = 0;
+
+		if(radarData1[1][j1].value < 0) {
+			radarData1[1][j1].value *= -1;
+		}
+		else if(radarData1[1][j1].value > 0) radarData1[1][j1].value = 0;
+	}
 	console.log(radarData);
 	RadarChart.draw("#chart", radarData, mycfg);
+	RadarChart.draw("#chart1", radarData1, mycfg);
 }
 
 d3.csv("data/isic_migration.csv", function (data) {
@@ -104,61 +170,6 @@ $(function() {
 		baseCountry = null;
 		compareCountry = null;
 		RadarChart.draw("#chart", radarData, mycfg);
+		RadarChart.draw("#chart1", radarData1, mycfg);
     })
 });
-//Options for the Radar chart, other than default
-
-
-//Call function to draw the Radar chart
-//Will expect that data is in %'s
-
-
-////////////////////////////////////////////
-/////////// Initiate legend ////////////////
-////////////////////////////////////////////
-
-// var svg = d3.select('#body')
-// 	.selectAll('svg')
-// 	.append('svg')
-// 	.attr("width", w+300)
-// 	.attr("height", h)
-
-// //Create the title for the legend
-// var text = svg.append("text")
-// 	.attr("class", "title")
-// 	.attr('transform', 'translate(90,0)') 
-// 	.attr("x", w - 70)
-// 	.attr("y", 10)
-// 	.attr("font-size", "12px")
-// 	.attr("fill", "#404040")
-// 	.text("What % of owners use a specific service in a week");
-		
-// //Initiate Legend	
-// var legend = svg.append("g")
-// 	.attr("class", "legend")
-// 	.attr("height", 100)
-// 	.attr("width", 200)
-// 	.attr('transform', 'translate(90,20)') 
-// 	;
-// 	//Create colour squares
-// 	legend.selectAll('rect')
-// 	  .data(LegendOptions)
-// 	  .enter()
-// 	  .append("rect")
-// 	  .attr("x", w - 65)
-// 	  .attr("y", function(d, i){ return i * 20;})
-// 	  .attr("width", 10)
-// 	  .attr("height", 10)
-// 	  .style("fill", function(d, i){ return colorscale(i);})
-// 	  ;
-// 	//Create text next to squares
-// 	legend.selectAll('text')
-// 	  .data(LegendOptions)
-// 	  .enter()
-// 	  .append("text")
-// 	  .attr("x", w - 52)
-// 	  .attr("y", function(d, i){ return i * 20 + 9;})
-// 	  .attr("font-size", "11px")
-// 	  .attr("fill", "#737373")
-// 	  .text(function(d) { return d; })
-// 	  ;	

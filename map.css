@@ -84,6 +84,7 @@ body {
 
 .legend-box {
   height: 120px;
+  width: 200px;
 }
 
 .legend-group > label {
@@ -96,7 +97,7 @@ body {
 }
 
 .left-bar {
-  margin-top: 50px;
+  margin-top: 10px;
   padding-left: 0 !important;
 }
 
@@ -106,4 +107,21 @@ body {
 
 .btn {
   outline: none !important;
+  width: 100px;
+}
+
+.legends {
+  margin-top: 10px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.legends > p {
+  font-size: 16px;
+  font-weight: 700 !important;
+  text-align: center;
+}
+
+.legends > label {
+  font-weight: 400 !important;
 }
